@@ -2,9 +2,11 @@ import app from "./app/app";
 import env from './environment'
 
 const PORT = env.getPort();
-const dbUrl = env.getDBName();
+
+const dbName = env.getDBName();
+const dbUser = env.getDbUserAndPassword();
 
 app.withPort(PORT)   
-   .withMongoDb(dbUrl)
+   .withMongoDb(dbUser, dbName)
    .withRoutes()
    .build();

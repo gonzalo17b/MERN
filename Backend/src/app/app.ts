@@ -29,8 +29,8 @@ class App {
       return this;
    }
 
-   public withMongoDb(mongo_url: string): App {
-      this.mongoUrl =`mongodb://localhost/${mongo_url}`;
+   public withMongoDb(user: [string, string], dbName: string): App {
+      this.mongoUrl = `mongodb+srv://${user[0]}:${user[1]}@cluster0.zbvj3.mongodb.net/${dbName}?retryWrites=true&w=majority`;      
       mongoose.connect(this.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false });
       return this;
    }

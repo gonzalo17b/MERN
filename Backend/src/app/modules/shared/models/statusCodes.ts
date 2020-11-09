@@ -1,6 +1,6 @@
-export enum StatusCodes {    
+export enum StatusCode {    
     Success = 200,
-    created = 201,
+    Created = 201,
 
     BadRequest = 400,
     Unauthorized = 401,

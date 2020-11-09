@@ -1,4 +1,4 @@
-export interface ModificationNote {
+export interface IModificationNote {
     modified_on: Date;
     modified_by: String;
     modification_note: String;

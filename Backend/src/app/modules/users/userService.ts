@@ -1,23 +1,34 @@
-import { IUser } from './userModel';
+import { UpdateUserDto, AddUserDto, IUserResponse } from './userModel';
 import users from './userSchema';
 
 export default class UserService {
     
-    public createUser(user_params: IUser, callback: any) {
-        const _session = new users(user_params);
+    public createUser(user: AddUserDto, callback: (err: string, user: any) => void) {
+        const _session = new users(user);
         _session.save(callback);
     }
 
-    public filterUser(query: any, callback: any) {
+    public filterUser(_id: String, callback: (err: string, user: IUserResponse) => void) {
+        const query = { _id: _id };
         users.findOne(query, callback);
     }
 
-    public updateUser(user_params: IUser, callback: any) {
-        const query = { _id: user_params._id };
-        users.findOneAndUpdate(query, user_params, callback);
+    public updateUser(_id: string, user: UpdateUserDto, callback: (error: string) => void) {
+        this.filterUser(_id, (error: string, dbUser: IUserResponse)=>{
+            if(error)
+                callback(error);
+            else if(!dbUser)
+                callback('User not found');
+            else
+            {
+                const query = { _id: _id };
+                const updatedUser = user.mapUserFromDb(dbUser);
+                users.findOneAndUpdate(query, updatedUser, callback);
+            }
+        });        
     }
     
-    public deleteUser(_id: String, callback: any) {
+    public deleteUser(_id: String, callback: (error: string) => void) {
         const query = { _id: _id };
         users.deleteOne(query, callback);
     }

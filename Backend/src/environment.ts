@@ -35,6 +35,9 @@ class Environment {
             return 'db_test_local';
         }
     }
+    getDbUserAndPassword(): [string, string]{
+        return ['test', '1234'];
+    }
 }
 
 export default new Environment(Environments.Local);
